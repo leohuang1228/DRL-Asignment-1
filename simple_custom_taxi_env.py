@@ -14,7 +14,7 @@ from IPython.display import clear_output
 
 class SimpleTaxiEnv(gym.Wrapper):
     def __init__(self, fuel_limit=5000):
-        self.grid_size = 5
+        self.grid_size = 6
         env = gym.make("Taxi-v3", render_mode="ansi")  # Taxi-v3 is **always 5x5**. If you want a different grid size, you must create a custom environment.
         super().__init__(env)
 
