@@ -10,4 +10,5 @@ AGENT = DQNAgent(state_dim, action_dim, model_path=model_path)
 
 
 def get_action(obs):
+    # use DQN
     return AGENT.select_action(obs)
