@@ -1,4 +1,5 @@
 tqdm
 requests
 argparse
+pytorch
 torch
