@@ -11,8 +11,8 @@ class DQN(nn.Module):
     def __init__(self, state_dim, action_dim):
         super(DQN, self).__init__()
         self.fc1 = nn.Linear(state_dim, 128)
-        self.fc2 = nn.Linear(128, 128)
-        self.fc3 = nn.Linear(128, action_dim)
+        self.fc2 = nn.Linear(128, 16)
+        self.fc3 = nn.Linear(16, action_dim)
 
     def forward(self, x):
         x = torch.relu(self.fc1(x))
@@ -24,7 +24,7 @@ class DQN(nn.Module):
 class DQNAgent:
     def __init__(self, state_dim, action_dim, model_path="dqn_taxi.pth",
                  learning_rate=0.0005, gamma=0.99, epsilon=1.0,
-                 epsilon_decay=0.995, epsilon_min=0.01, buffer_size=10000, batch_size=64):
+                 epsilon_decay=0.995, epsilon_min=0.1, buffer_size=10000, batch_size=64):
 
         self.state_dim = state_dim
         self.action_dim = action_dim
@@ -44,9 +44,6 @@ class DQNAgent:
 
         self.optimizer = optim.Adam(self.model.parameters(), lr=learning_rate)
         self.loss_fn = nn.MSELoss()
-
-        # Try to load a pre-trained model
-        self.load_model()
 
     def select_action(self, state):
         if random.random() < self.epsilon:
@@ -95,7 +92,6 @@ class DQNAgent:
             'optimizer_state_dict': self.optimizer.state_dict(),
             'epsilon': self.epsilon
         }, self.model_path)
-        print(f"Model saved to {self.model_path}")
 
     def load_model(self):
         if os.path.exists(self.model_path):
