@@ -1,9 +1,2 @@
-import numpy as np
-
-
 def obs_reshape(obs):
-    obs_new = np.array(obs, dtype=float)
-
-    grid_size = obs[5]
-    obs_new[0:10] = obs_new[0:10] / grid_size
-    return tuple(obs_new)
+    return (obs[0] / obs[5], obs[1] / obs[5], 1 - obs[0] / obs[5], 1 - obs[1] / obs[5], obs[10], obs[11], obs[12], obs[13])

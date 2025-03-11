@@ -11,8 +11,8 @@ class DQN(nn.Module):
     def __init__(self, state_dim, action_dim):
         super(DQN, self).__init__()
         self.fc1 = nn.Linear(state_dim, 128)
-        self.fc2 = nn.Linear(128, 16)
-        self.fc3 = nn.Linear(16, action_dim)
+        self.fc2 = nn.Linear(128, 32)
+        self.fc3 = nn.Linear(32, action_dim)
 
     def forward(self, x):
         x = torch.relu(self.fc1(x))
