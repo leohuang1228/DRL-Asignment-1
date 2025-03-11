@@ -1,5 +1,4 @@
 import gym
-from IPython.display import clear_output
 
 # This environment allows you to verify whether your program runs correctly during testing,
 # as it follows the same observation format from `env.reset()` and `env.step()`.
@@ -127,46 +126,6 @@ class Costumenv(gym.Wrapper):
         if self.current_fuel <= 0:
             return self.get_state(), reward - 10, True, False, {}
         return self.get_state(), reward, False, truncated, info
-
-    def render_env(self, taxi_pos, action=None, step=None, fuel=None):
-        clear_output(wait=True)
-
-        grid = [['.'] * self.grid_size for _ in range(self.grid_size)]
-
-        '''
-        # Place passenger
-        py, px = passenger_pos
-        if 0 <= px < self.grid_size and 0 <= py < self.grid_size:
-            grid[py][px] = 'P'
-        '''
-
-        grid[0][0] = 'R'
-        grid[0][4] = 'G'
-        grid[4][0] = 'Y'
-        grid[4][4] = 'B'
-        '''
-        # Place destination
-        dy, dx = destination_pos
-        if 0 <= dx < self.grid_size and 0 <= dy < self.grid_size:
-            grid[dy][dx] = 'D'
-        '''
-        # Place taxi
-        ty, tx = taxi_pos
-        if 0 <= tx < self.grid_size and 0 <= ty < self.grid_size:
-            grid[ty][tx] = '🚖'
-
-        # Print step info
-        print(f"\nStep: {step}")
-        print(f"Taxi Position: ({tx}, {ty})")
-        # print(f"Passenger Position: ({px}, {py}) {'(In Taxi)' if (px, py) == (tx, ty) else ''}")
-        # print(f"Destination: ({dx}, {dy})")
-        print(f"Fuel Left: {fuel}")
-        print(f"Last Action: {self.get_action_name(action)}\n")
-
-        # Print grid
-        for row in grid:
-            print(" ".join(row))
-        print("\n")
 
     def get_action_name(self, action):
         """Returns a human-readable action name."""
