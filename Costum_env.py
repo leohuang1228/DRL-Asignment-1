@@ -1,13 +1,5 @@
 import gym
 
-# This environment allows you to verify whether your program runs correctly during testing,
-# as it follows the same observation format from `env.reset()` and `env.step()`.
-# However, keep in mind that this is just a simplified environment.
-# The full specifications for the real testing environment can be found in the provided spec.
-#
-# You are free to modify this file to better match the real environment and train your own agent.
-# Good luck!
-
 
 class Costumenv(gym.Wrapper):
     def __init__(self, fuel_limit=5000, grid_size: int = 5):
@@ -85,10 +77,10 @@ class Costumenv(gym.Wrapper):
 
         if action in [0, 1, 2, 3]:
             if not (0 <= next_row < self.grid_size and 0 <= next_col < self.grid_size):
-                reward = -5
+                reward = -10
                 self.current_fuel -= 1
                 if self.current_fuel <= 0:
-                    return self.get_state(), reward - 10, True, False, {}
+                    return self.get_state(), reward, True, False, {}
                 return self.get_state(), reward, False, False, {}
 
         taxi_row, taxi_col = next_row, next_col
@@ -97,11 +89,11 @@ class Costumenv(gym.Wrapper):
         obs, reward, terminated, truncated, info = super().step(action)
 
         if reward == 20:
-            reward = 50
+            reward = 0
         elif reward == -1:
-            reward = -0.1
+            reward = 0.1
         elif reward == -10:
-            reward = -10
+            reward = 10
 
         if action == 4:
             if pass_idx == 4:
@@ -113,18 +105,18 @@ class Costumenv(gym.Wrapper):
         elif action == 5:
             if self.passenger_picked_up:
                 if (taxi_row, taxi_col) == self.destination:
-                    reward += 50
+                    reward += 0
                     return self.get_state(), reward - 0.1, True, {}, {}
                 else:
                     reward -= 10
 
         if action in [4, 5]:
-            reward -= 50
+            reward -= 10
 
         if self.passenger_picked_up:
             self.passenger_loc = (taxi_row, taxi_col)
         if self.current_fuel <= 0:
-            return self.get_state(), reward - 10, True, False, {}
+            return self.get_state(), reward, True, False, {}
         return self.get_state(), reward, False, truncated, info
 
     def get_action_name(self, action):

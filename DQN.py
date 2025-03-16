@@ -11,8 +11,8 @@ class DQN(nn.Module):
     def __init__(self, state_dim, action_dim):
         super(DQN, self).__init__()
         self.fc1 = nn.Linear(state_dim, 128)
-        self.fc2 = nn.Linear(128, 32)
-        self.fc3 = nn.Linear(32, action_dim)
+        self.fc2 = nn.Linear(128, 128)
+        self.fc3 = nn.Linear(128, action_dim)
 
     def forward(self, x):
         x = torch.relu(self.fc1(x))
@@ -23,7 +23,7 @@ class DQN(nn.Module):
 # Define the DQN Agent
 class DQNAgent:
     def __init__(self, state_dim, action_dim, model_path="dqn_taxi.pth",
-                 learning_rate=0.0005, gamma=0.99, epsilon=1.0,
+                 learning_rate=0.0005, gamma=0.9, epsilon=1.0,
                  epsilon_decay=0.995, epsilon_min=0.1, buffer_size=10000, batch_size=64):
 
         self.state_dim = state_dim

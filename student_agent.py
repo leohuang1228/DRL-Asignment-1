@@ -4,7 +4,7 @@ from Costum_env import Costumenv
 from agent_util import obs_reshape
 
 
-model_path = "agents/walk_only"
+model_path = "agents/survive"
 
 env = Costumenv()
 obs, _ = env.reset()
