@@ -1,19 +1,19 @@
 # Remember to adjust your student ID in meta.xml
-from DQN import DQNAgent
+from Qtable_agent import QLearningAgent
 from Costum_env import Costumenv
-from agent_util import obs_reshape
+from agent_util import obs_only_obstacle
 
 
-model_path = "agents/survive"
+model_path = "q_tables/walk_only"
 
 env = Costumenv()
 obs, _ = env.reset()
-state_dim = len(obs_reshape(obs))
+state_dim = len(obs_only_obstacle(obs))
 action_dim = 6
-AGENT = DQNAgent(state_dim, action_dim, model_path=model_path)
-AGENT.load_model()
+AGENT = QLearningAgent(action_dim)
+AGENT.load_q_table(model_path)
 
 
 def get_action(obs):
     # use DQN
-    return AGENT.select_action(obs_reshape(obs))
+    return AGENT.choose_best_action(obs_only_obstacle(obs))

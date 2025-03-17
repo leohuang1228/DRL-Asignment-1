@@ -10,3 +10,7 @@ def obs_reshape(obs):
     else:
         agent_y1 = obs[1] / max_y
     return (agent_x1, agent_y1, obs[10], obs[11], obs[12], obs[13])
+
+
+def obs_only_obstacle(obs):
+    return (obs[10], obs[11], obs[12], obs[13])

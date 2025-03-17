@@ -12,3 +12,4 @@ eval.py
 test.*
 *.ipynb
 rl_env
+train_q_table.py
